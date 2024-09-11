@@ -652,7 +652,7 @@ test("should return object", () => {
   expect(typeof game).toBe('object')
 })
 
-test("should return a game object with two trainers who have 6 pokemon each", () => {
+test.only("should return a game object with two trainers who have 6 pokemon each", () => {
   //Arrange
   const trainerOne = new Trainer
   const pokemonOneT1 = new Squirtle
@@ -686,9 +686,16 @@ test("should return a game object with two trainers who have 6 pokemon each", ()
   trainerTwo.catch(pokemonSixT2)
 
   console.log(trainerOne.getPokemon(Rattata))
+  charmander = new Charmander
+
+  squirtle = new Squirtle
+  
+  console.log(charmander.isWeakTo(squirtle), "hello")
+  console.log(charmander.type)
 
   //Act
   const game = new Battle(trainerOne, trainerTwo)
+  console.log(game.trainerOne)
   // console.log(game.trainerOne.belt, "trainer One belt")
 
 

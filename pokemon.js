@@ -1,33 +1,3 @@
-/*
-4 classes that should extend Pokemon -> Fire, Water, Grass, Normal
-Properties
-type
-
-A string of their type ("fire","water","grass", or "normal").
-Methods
-isEffectiveAgains
-
-This will take a Pokemon as an argument and return 
-a boolean describing whether the current Pokemon is 
-effective against the given Pokemon.
-
-isWeakTo
-
-This will take a Pokemon as an argument and return a 
-boolean describing whether the current Pokemon is weak 
-to the given Pokemon.
-
-Below is a list of the types and their respective strengths 
-and weaknesses. You should use this to inform the behaviour 
-of the methods described above for each class. Note: You will 
-need to implement the type property for each derived class for the above methods to work as expected.
-
-fire pokemon are strong against grass, and weak against water.
-grass pokemon are strong against water, and weak against fire.
-water pokemon are strong against fire and weak against grass.
-normal pokemon are neither strong nor weak against any other types.
-
-*/
 
 class Pokemon {
   constructor(name, hitpoints, attackDamage, move) {
@@ -138,7 +108,11 @@ class Charmander extends firePokemon {
     super(name, hitpoints, attackDamage, move, type);
     this.name = "Charmander";
     this.move = "ember";
+    this.hitpoints = 44;
+    this.attackDamage = 17;
   }
+
+
 }
 
 class Squirtle extends waterPokemon {
@@ -146,6 +120,8 @@ class Squirtle extends waterPokemon {
     super(name, hitpoints, attackDamage, move, type);
     this.name = "Squirtle";
     this.move = "water gun";
+    this.hitpoints = 44;
+    this.attackDamage = 16; 
   }
 }
 
@@ -154,6 +130,8 @@ class Bulbasaur extends grassPokemon {
     super(name, hitpoints, attackDamage, move, type);
     this.name = "Bulbasaur";
     this.move = "vine whip";
+    this.hitpoints = 45;
+    this.attackDamage = 16;
   }
 }
 
@@ -161,6 +139,8 @@ class Rattata extends normalPokemon {
   constructor(name, hitpoints, attackDamage, move, type) {
     super(name, hitpoints, attackDamage, move, type);
     this.name = "Rattata";
+    this.hitpoints = 50;
+    this.attackDamage = 15;
   }
 }
 
@@ -241,6 +221,65 @@ class Battle {
     this.trainerOne = trainerOne
     this.trainerTwo = trainerTwo
   }
+
+  game(trainerOne, trainerTwo) {
+
+    //player 2 select pokemon
+
+    //player 1 pokemon takes a turn
+
+    //player 2 pokemon takes a turn
+
+    //repeats until a player pokemon faints
+    //player who pokemon is still alive wins
+    
+
+
+
+  }
+
+
+//   Battle
+// Finally, you will need a way to battle the Pokemon. The battle should take two trainers and the names of the Pokemon they wish to battle.
+
+// Methods
+// fight
+
+// This should take the Pokemon whose turn it is,
+// Attack the defending Pokemon (deducting attacker's attack damage from the defender's hit points)
+// End their turn
+// Should take each Pokemon's strengths and weaknesses into account
+// If a defender is strong against the attacking type, the attacking type's damage should be multiplied by 0.75.
+// If a defender is weak against the attacking type, the attacking type's damage should be multiplied by 1.25.
+// Each attack should be followed by an attack message
+// The message will vary depending on the defender's weakness/strength.
+// If the defending Pokemon faints (depletes all hit points), the attacker wins.
+// This is quite a complex method, and you may want to break up some of its behaviour into additional methods so you can make it tidier. You may also want to create additional properties, if you think these will be helpful.
+
+// inputs
+  //battle object
+    // trainer one object
+      // 6 pokeballs already
+    //trainer two object
+      // 6 pokeballs already
+// process
+  //player 1 is prompted to pick a pokemon to use
+  //player 2 is prompted to pick a pokemon to use
+
+// p1 pokemon attacks, attack shown. message given
+// shows damage to p2
+
+// p2 pokemon attacks, attack shown
+// shows damage to p1
+
+// repeat until a pokemon faints
+
+
+
+// outputs
+
+
+
 }
 
 module.exports = {
