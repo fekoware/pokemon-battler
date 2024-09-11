@@ -1,6 +1,5 @@
-const inquirer = require('inquirer')
-
-class Pokemon {
+import inquirer from "inquirer";
+export class Pokemon {
   constructor(name, hitpoints, attackDamage, move) {
     this.name = name;
     this.hitpoints = hitpoints;
@@ -25,7 +24,7 @@ class Pokemon {
   }
 }
 
-class firePokemon extends Pokemon {
+export class firePokemon extends Pokemon {
   constructor(name, hitpoints, attackDamage, move, type) {
     super(name, hitpoints, attackDamage, move);
     this.type = "fire";
@@ -47,7 +46,7 @@ class firePokemon extends Pokemon {
   }
 }
 
-class waterPokemon extends Pokemon {
+export class waterPokemon extends Pokemon {
   constructor(name, hitpoints, attackDamage, move, type) {
     super(name, hitpoints, attackDamage, move, type);
     this.type = "water";
@@ -69,7 +68,7 @@ class waterPokemon extends Pokemon {
   }
 }
 
-class grassPokemon extends Pokemon {
+export class grassPokemon extends Pokemon {
   constructor(name, hitpoints, attackDamage, move, type) {
     super(name, hitpoints, attackDamage, move);
     this.type = "grass";
@@ -91,7 +90,7 @@ class grassPokemon extends Pokemon {
   }
 }
 
-class normalPokemon extends Pokemon {
+export class normalPokemon extends Pokemon {
   constructor(name, hitpoints, attackDamage, move, type) {
     super(name, hitpoints, attackDamage, move);
     this.type = "normal";
@@ -104,7 +103,7 @@ class normalPokemon extends Pokemon {
   }
 }
 
-class Charmander extends firePokemon {
+export class Charmander extends firePokemon {
   constructor(name, hitpoints, attackDamage, move, type) {
     super(name, hitpoints, attackDamage, move, type);
     this.name = "Charmander";
@@ -112,21 +111,19 @@ class Charmander extends firePokemon {
     this.hitpoints = 44;
     this.attackDamage = 17;
   }
-
-
 }
 
-class Squirtle extends waterPokemon {
+export class Squirtle extends waterPokemon {
   constructor(name, hitpoints, attackDamage, move, type) {
     super(name, hitpoints, attackDamage, move, type);
     this.name = "Squirtle";
     this.move = "water gun";
     this.hitpoints = 44;
-    this.attackDamage = 16; 
+    this.attackDamage = 16;
   }
 }
 
-class Bulbasaur extends grassPokemon {
+export class Bulbasaur extends grassPokemon {
   constructor(name, hitpoints, attackDamage, move, type) {
     super(name, hitpoints, attackDamage, move, type);
     this.name = "Bulbasaur";
@@ -136,7 +133,7 @@ class Bulbasaur extends grassPokemon {
   }
 }
 
-class Rattata extends normalPokemon {
+export class Rattata extends normalPokemon {
   constructor(name, hitpoints, attackDamage, move, type) {
     super(name, hitpoints, attackDamage, move, type);
     this.name = "Rattata";
@@ -145,7 +142,7 @@ class Rattata extends normalPokemon {
   }
 }
 
-class Pokeball {
+export class Pokeball {
   constructor(pokemon) {
     this.pokemon = {};
   }
@@ -155,13 +152,9 @@ class Pokeball {
       this.pokemon = pokemon;
       return `You caught ${this.pokemon.name}!`;
     } else if (Object.keys(this.pokemon).length != 0) {
-      return this.pokemon ;
+      return this.pokemon;
     }
   }
-
- 
-
-  
 
   isEmpty(pokemon) {
     if (Object.keys(this.pokemon).length === 0) {
@@ -179,7 +172,7 @@ class Pokeball {
   }
 }
 
-class Trainer {
+export class Trainer {
   constructor() {
     this.belt = [
       new Pokeball(),
@@ -192,115 +185,65 @@ class Trainer {
   }
 
   catch(pokemon) {
-
-
     for (let i = 0; i < Object.keys(this.belt).length; i++) {
       if (Object.keys(this.belt[i].pokemon).length === 0) {
-       
         this.belt[i].ballThrow(pokemon);
-        return this.belt[i].pokemon.name
-      } 
+        return this.belt[i].pokemon.name;
+      }
     }
-    
-      return "you already have 6 pokemon";
-    
+
+    return "you already have 6 pokemon";
   }
-
-
 
   getPokemon(pokemon) {
     for (let i = 0; i < Object.keys(this.belt).length; i++) {
       if (this.belt[i].pokemon.name === pokemon.name) {
-
-        return this.belt[i].ballThrow(pokemon)
-        ;
-      } 
+        return this.belt[i].ballThrow(pokemon);
+      }
     }
-    
-      return "You do not have this pokemon in your belt";
-    
+
+    return "You do not have this pokemon in your belt";
   }
 }
 
-class Battle {
-  constructor(trainerOne, trainerTwo) {
-    this.trainerOne = trainerOne
-    this.trainerTwo = trainerTwo
-  }
-
-
-
-  game(trainerOne, trainerTwo) {
-
-    //player 2 select pokemon
-
-    //player 1 pokemon takes a turn
-
-    //player 2 pokemon takes a turn
-
-    //repeats until a player pokemon faints
-    //player who pokemon is still alive wins
-    
-
-
-
-  }
-
-
-//   Battle
-// Finally, you will need a way to battle the Pokemon. The battle should take two trainers and the names of the Pokemon they wish to battle.
-
-// Methods
-// fight
-
-// This should take the Pokemon whose turn it is,
-// Attack the defending Pokemon (deducting attacker's attack damage from the defender's hit points)
-// End their turn
-// Should take each Pokemon's strengths and weaknesses into account
-// If a defender is strong against the attacking type, the attacking type's damage should be multiplied by 0.75.
-// If a defender is weak against the attacking type, the attacking type's damage should be multiplied by 1.25.
-// Each attack should be followed by an attack message
-// The message will vary depending on the defender's weakness/strength.
-// If the defending Pokemon faints (depletes all hit points), the attacker wins.
-// This is quite a complex method, and you may want to break up some of its behaviour into additional methods so you can make it tidier. You may also want to create additional properties, if you think these will be helpful.
-
-// inputs
-  //battle object
-    // trainer one object
-      // 6 pokeballs already
-    //trainer two object
-      // 6 pokeballs already
-// process
-  //player 1 is prompted to pick a pokemon to use
-  //player 2 is prompted to pick a pokemon to use
-
-// p1 pokemon attacks, attack shown. message given
-// shows damage to p2
-
-// p2 pokemon attacks, attack shown
-// shows damage to p1
-
-// repeat until a pokemon faints
-
-
-
-// outputs
-
-
-
+export class Battle {
+  
 }
 
-module.exports = {
-  Pokemon,
-  firePokemon,
-  waterPokemon,
-  grassPokemon,
-  normalPokemon,
-  Charmander,
-  Bulbasaur,
-  Squirtle,
-  Rattata,
-  Pokeball,
-  Trainer,
-  Battle
-};
+const firstQuestion = [
+  {
+    type: "input",
+    name: "name",
+    message: "Hello Trainer! What is your name?",
+  },
+];
+
+const secondQuestion = [
+  {
+    type: 'confirm',
+    name: 'confirm',
+    message: 'Do you want to continue?',
+  }
+]
+
+function playGame() {
+  inquirer.
+  prompt(firstQuestion).then((firstAnswer) => {
+    console.log("Hello, Trainer " + firstAnswer.name + "! Ready to play?")
+    return inquirer.prompt(secondQuestion)
+
+  }).then((secondAnswer) => {
+    if (!secondAnswer.name) {
+      console.log("Okay, come back next time when you're ready to catch em' all!")
+      return 
+    }
+    else {
+      console.log("Okay! We're setting up your pokeballs");
+      console.log("You'll have 5 pokeballs, but there will only be one pokemon to catch!")
+      console.log("After, you'll take your pokemon into battle!")
+    }
+  });
+}
+
+playGame();
+

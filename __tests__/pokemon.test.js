@@ -12,7 +12,9 @@ const {
   Trainer,
   Battle,
 } = require("../pokemon");
-const inquirer = require('inquirer')
+
+const inquirer = require("inquirer");
+
 
 describe("pokemon game", () => {
   test("returns an object", () => {
@@ -693,8 +695,10 @@ describe("pokemon game", () => {
     expect(game.trainerOne.belt[1].isEmpty()).toBe(false);
   });
 
-  test.only("should allow 2 trainers to register their names", () => {
-   
+  test.only("should allow 1 trainer1 to register their names and choose a pokemon", () => {
 
+    newBattle = new Battle;
+
+    return newBattle
   });
 });
