@@ -1,3 +1,4 @@
+const inquirer = require('inquirer')
 
 class Pokemon {
   constructor(name, hitpoints, attackDamage, move) {
@@ -154,9 +155,13 @@ class Pokeball {
       this.pokemon = pokemon;
       return `You caught ${this.pokemon.name}!`;
     } else if (Object.keys(this.pokemon).length != 0) {
-      return `You have ${this.pokemon.name} in this Pokeball. Go! ${this.pokemon.name}!`;
+      return this.pokemon ;
     }
   }
+
+ 
+
+  
 
   isEmpty(pokemon) {
     if (Object.keys(this.pokemon).length === 0) {
@@ -193,7 +198,7 @@ class Trainer {
       if (Object.keys(this.belt[i].pokemon).length === 0) {
        
         this.belt[i].ballThrow(pokemon);
-        return this.belt[i].pokemon.name, "the array of pokemon caught";
+        return this.belt[i].pokemon.name
       } 
     }
     
@@ -206,6 +211,7 @@ class Trainer {
   getPokemon(pokemon) {
     for (let i = 0; i < Object.keys(this.belt).length; i++) {
       if (this.belt[i].pokemon.name === pokemon.name) {
+
         return this.belt[i].ballThrow(pokemon)
         ;
       } 
@@ -221,6 +227,8 @@ class Battle {
     this.trainerOne = trainerOne
     this.trainerTwo = trainerTwo
   }
+
+
 
   game(trainerOne, trainerTwo) {
 
