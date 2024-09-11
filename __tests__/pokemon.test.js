@@ -10,11 +10,11 @@ const {
   Rattata,
   Pokeball,
   Trainer,
-  Battle
+  Battle,
 } = require("../pokemon");
+const inquirer = require('inquirer')
 
 describe("pokemon game", () => {
-
   test("returns an object", () => {
     //Arrange
     const output = new Pokemon();
@@ -92,7 +92,6 @@ describe("pokemon game", () => {
     output.takeDamage(damage);
     expect(output.hitpoints).toBe(40);
   });
-
 
   test("returns data type and attack damage value", () => {
     //arrange
@@ -436,7 +435,6 @@ describe("pokemon game", () => {
     expect(output.move).toBe("ember");
   });
 
-
   test("should return string if pokeball is not empty", () => {
     //Arrange
     const name = "Charmander";
@@ -547,7 +545,6 @@ describe("pokemon game", () => {
     expect(empty).toBe(`Bulbasaur is in this pokeball`);
   });
 
-
   test("should return object data type", () => {
     //Arrange
     const trainerTest = new Trainer();
@@ -609,7 +606,6 @@ describe("pokemon game", () => {
     );
   });
 
-
   test("should return string data type", () => {
     //Arrange
     const testTrainer = new Trainer();
@@ -641,69 +637,64 @@ describe("pokemon game", () => {
     expect(testFunction).toBe("You do not have this pokemon in your belt");
   });
 
-  
-test("should return object", () => {
-  //Arrange
-  const playerOne = new Trainer
-  const playerTwo = new Trainer
-  //Act
-  const game = new Battle(playerOne,playerTwo)
-  //Assert
-  expect(typeof game).toBe('object')
-})
+  test("should return object", () => {
+    //Arrange
+    const playerOne = new Trainer();
+    const playerTwo = new Trainer();
+    //Act
+    const game = new Battle(playerOne, playerTwo);
+    //Assert
+    expect(typeof game).toBe("object");
+  });
 
-test.only("should return a game object with two trainers who have 6 pokemon each", () => {
-  //Arrange
-  const trainerOne = new Trainer
-  const pokemonOneT1 = new Squirtle
-  const pokemonTwoT1 = new Charmander
-  const pokemonThreeT1 = new Rattata
-  const pokemonFourT1 = new Rattata
-  const pokemonFiveT1 = new Rattata
-  const pokemonSixT1 = new Rattata
+  test("should return a game object with two trainers who have 6 pokemon each", () => {
+    //Arrange
+    const trainerOne = new Trainer();
+    const pokemonOneT1 = new Squirtle();
+    const pokemonTwoT1 = new Charmander();
+    const pokemonThreeT1 = new Rattata();
+    const pokemonFourT1 = new Rattata();
+    const pokemonFiveT1 = new Rattata();
+    const pokemonSixT1 = new Rattata();
 
-  trainerOne.catch(pokemonOneT1)
-  trainerOne.catch(pokemonTwoT1)
-  trainerOne.catch(pokemonThreeT1)
-  trainerOne.catch(pokemonFourT1)
-  trainerOne.catch(pokemonFiveT1)
-  trainerOne.catch(pokemonSixT1)
+    trainerOne.catch(pokemonOneT1);
+    trainerOne.catch(pokemonTwoT1);
+    trainerOne.catch(pokemonThreeT1);
+    trainerOne.catch(pokemonFourT1);
+    trainerOne.catch(pokemonFiveT1);
+    trainerOne.catch(pokemonSixT1);
 
-  
-  const trainerTwo = new Trainer
-  const pokemonOneT2 = new Rattata
-  const pokemonTwoT2 = new Charmander
-  const pokemonThreeT2 = new Rattata
-  const pokemonFourT2 = new Bulbasaur
-  const pokemonFiveT2 = new Charmander
-  const pokemonSixT2 = new Squirtle
+    const trainerTwo = new Trainer();
+    const pokemonOneT2 = new Rattata();
+    const pokemonTwoT2 = new Charmander();
+    const pokemonThreeT2 = new Rattata();
+    const pokemonFourT2 = new Bulbasaur();
+    const pokemonFiveT2 = new Charmander();
+    const pokemonSixT2 = new Squirtle();
 
-  trainerTwo.catch(pokemonOneT2)
-  trainerTwo.catch(pokemonTwoT2)
-  trainerTwo.catch(pokemonThreeT2)
-  trainerTwo.catch(pokemonFourT2)
-  trainerTwo.catch(pokemonFiveT2)
-  trainerTwo.catch(pokemonSixT2)
+    trainerTwo.catch(pokemonOneT2);
+    trainerTwo.catch(pokemonTwoT2);
+    trainerTwo.catch(pokemonThreeT2);
+    trainerTwo.catch(pokemonFourT2);
+    trainerTwo.catch(pokemonFiveT2);
+    trainerTwo.catch(pokemonSixT2);
 
-  console.log(trainerOne.getPokemon(Rattata))
-  charmander = new Charmander
+    charmander = new Charmander();
 
-  squirtle = new Squirtle
-  
-  console.log(charmander.isWeakTo(squirtle), "hello")
-  console.log(charmander.type)
+    squirtle = new Squirtle();
 
-  //Act
-  const game = new Battle(trainerOne, trainerTwo)
-  console.log(game.trainerOne)
-  // console.log(game.trainerOne.belt, "trainer One belt")
+    //Act
+    const game = new Battle(trainerOne, trainerTwo);
+    console.log(game.trainerOne);
+    // console.log(game.trainerOne.belt, "trainer One belt")
 
+    //Assert
+    expect(game.trainerOne.belt[0].pokemon.name).toBe("Squirtle");
+    expect(game.trainerOne.belt[1].isEmpty()).toBe(false);
+  });
 
+  test.only("should allow 2 trainers to register their names", () => {
+   
 
-  //Assert
-  expect(game.trainerOne.belt[0].pokemon.name).toBe("Squirtle")
-  expect(game.trainerOne.belt[1].isEmpty()).toBe(false)
-  
-  
-})
+  });
 });
