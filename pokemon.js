@@ -16,7 +16,7 @@ export class Pokemon {
     return this.attackDamage;
   }
   hasFainted() {
-    if (this.hitpoints === 0) {
+    if (this.hitpoints <= 0) {
       return true;
     } else {
       return false;
@@ -242,161 +242,153 @@ const fourthQuestion = [
 
 const fifthQuestion = [];
 
-
 function playGame() {
   let trainer;
+  let trainerName;
   let pokemon;
   let opponentPokemon;
 
-  function namePrompt() {
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function namePrompt() {
     return inquirer.prompt(firstQuestion).then((firstAnswer) => {
       if (firstAnswer.name.length === 0) {
         console.log("empty name not allowed, please insert any name");
         return namePrompt();
       } else {
-        trainer = firstAnswer.name;
-        console.log("Hello, Trainer " + firstAnswer.name + "! Ready to play?");
+        trainerName = firstAnswer.name;
+
+        console.log("Hello, Trainer " + trainerName + "! Ready to play?");
         return inquirer.prompt(secondQuestion);
       }
     });
   }
 
-  function battle() {
-
-    if(pokemon.hasFainted()) {
-      console.log(`Oh no! Your pokemon ${pokemon.name} has fainted, and you have lost!` )
-      console.log('Choose another type of pokemon and try again')
+  async function battle() {
+    if (pokemon.isEffectiveAgainst(opponentPokemon)) {
+      pokemon.attackDamage = pokemon.attackDamage * 1.25;
     }
-    else if (opponentPokemon.hasFainted) {
-      console.log(`Well done! Your pokemon has won the battle! Time for ${pokemon.name} to get some rest`)
-      console.log("Thank you for playing. Goodbye!")
-      return
+    if (pokemon.isWeakTo(opponentPokemon)) {
+      pokemon.attackDamage = pokemon.attackDamage * 0.75;
     }
-    console.log("inside battle function")
+    if (opponentPokemon.isEffectiveAgainst(pokemon)) {
+      opponentPokemon.attackDamage = opponentPokemon.attackDamage * 1.25;
+    }
+    if (opponentPokemon.isWeakTo(pokemon)) {
+      opponentPokemon.attackDamage = opponentPokemon.attackDamage * 0.75;
+    }
 
-    console.log(trainer.getPokemon(pokemon)
-  )
-    console.log(trainer)
-    console.log(opponentPokemon.hitpoints)
+    while (pokemon.hitpoints > 0 || opponentPokemon.hitpoints > 0) {
+      await sleep(1000);
+      pokemon.takeDamage(opponentPokemon.useMove());
+      console.log(
+        `Your Pokemon ${pokemon.name} has ${pokemon.hitpoints} left before they faint `
+      );
 
-    opponentPokemon.takeDamage(pokemon.useMove())
+      await sleep(1000);
+      opponentPokemon.takeDamage(pokemon.useMove());
+      console.log(
+        `Your Opponent ${opponentPokemon.name} has ${opponentPokemon.hitpoints} left before they faint `
+      );
+    }
 
+    await sleep(1000);
+    if (pokemon.hasFainted()) {
+      await sleep(1000);
+      console.log(
+        `Oh no! Your pokemon ${pokemon.name} has fainted, and you have lost!`
+      );
 
-    console.log(opponentPokemon.name + " has " + opponentPokemon.hitpoints +  " hitpoints left")
-    
+      await sleep(1000);
+      console.log(
+        "Restart the game. choose another type of pokemon and try again. Goodbye."
+      );
+    }
 
+    await sleep(1000);
+    if (opponentPokemon.hasFainted()) {
+      await sleep(1000);
+      console.log(
+        `Well done! Your pokemon has won the battle! Time for ${pokemon.name} to get some rest`
+      );
 
-
-    //battle takes in both pokemons
-
-    // enters a promise chain where pokemon go back and forth
-
+      await sleep(1000);
+      console.log("Thank you for playing. Goodbye, winner!");
+      return;
+    }
   }
 
-  namePrompt()
-    .then((secondAnswer) => {
-      if (!secondAnswer.confirm) {
-        return "Okay, come back next time when you're ready to catch em' all. Goodbye!";
-      } else {
-        console.log("Okay! We're setting up your pokeballs");
-        console.log(
-          "You'll have 5 pokeballs, but there will only be one pokemon to catch!"
-        );
-        console.log("After, you'll take your pokemon into battle!");
-        trainer = new Trainer();
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
-        return inquirer.prompt(thirdQuestion);
-      }
-    })
-    .then((thirdAnswer) => {
+  async function startGame() {
+    const secondAnswer = await namePrompt();
+
+    if (!secondAnswer.confirm) {
+      return "Okay, come back next time when you're ready to catch 'em all. Goodbye!";
+    } else {
+      console.log("Okay! We're setting up your pokeballs");
+      await sleep(2000);
+      console.log(
+        "You'll have 5 pokeballs, but there will only be one pokemon to catch!"
+      );
+      await sleep(2000);
+      console.log("After, you'll take your pokemon into battle!");
+      trainer = new Trainer();
+
+      const thirdAnswer = await inquirer.prompt(thirdQuestion);
+
       if (thirdAnswer.pokemon === "Charmander") {
         pokemon = new Charmander();
-        console.log("you've picked " + pokemon.name + "!");
-        console.log("Here are the details about your pokemon");
-        console.log(pokemon);
-        trainer.catch(pokemon);
-        console.log(
-          "View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!"
-        );
-        console.log(trainer);
-        console.log(
-          trainer.belt.forEach((pokeball) => {
-            console.log(pokeball.name);
-          })
-        );
-      }
-      if (thirdAnswer.pokemon === "Squirtle") {
+      } else if (thirdAnswer.pokemon === "Squirtle") {
         pokemon = new Squirtle();
-        console.log("you've picked " + pokemon.name + "!");
-        console.log("Here are the details about your pokemon");
-        console.log(pokemon);
-        trainer.catch(pokemon);
-        console.log(
-          "View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!"
-        );
-        console.log(trainer);
-      }
-      if (thirdAnswer.pokemon === "Bulbasaur") {
+      } else if (thirdAnswer.pokemon === "Bulbasaur") {
         pokemon = new Bulbasaur();
-        console.log("you've picked " + pokemon.name + "!");
-        console.log("Here are the details about your pokemon");
-        console.log(pokemon);
-        trainer.catch(pokemon);
-        console.log(
-          "View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!"
-        );
-        console.log(trainer);
-      }
-      if (thirdAnswer.pokemon === "Rattata") {
+      } else if (thirdAnswer.pokemon === "Rattata") {
         pokemon = new Rattata();
-        console.log("you've picked " + pokemon.name + "!");
-        console.log("Here are the details about your pokemon");
-        console.log(pokemon);
-        trainer.catch(pokemon);
-        console.log(
-          "View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!"
-        );
-        console.log(trainer);
       }
-      console.log(pokemon.name + " has been added to your your pokebelt");
-      return inquirer.prompt(fourthQuestion);
-    })
-    .then((fourthAnswer) => {
+      await sleep(2000);
+      console.log(`You've picked ${pokemon.name}!`);
+      await sleep(2000);
+      console.log("Here are the details about your pokemon:");
+      await sleep(2000);
+      console.log(pokemon);
+      await sleep(2000);
+      trainer.catch(pokemon);
+      await sleep(2000);
+      console.log("View how your belt looks:");
+      await sleep(2000);
+      console.log(trainer);
+
+      const fourthAnswer = await inquirer.prompt(fourthQuestion);
+
       if (fourthAnswer.pokemon === "Charmander") {
         opponentPokemon = new Charmander();
-        console.log(
-          "you've picked " + opponentPokemon.name + "as your opponent!"
-        );
-        console.log("Here are the details about your opponent");
-        console.log(opponentPokemon);
-      }
-      if (fourthAnswer.pokemon === "Squirtle") {
+      } else if (fourthAnswer.pokemon === "Squirtle") {
         opponentPokemon = new Squirtle();
-        console.log("you've picked " + opponentPokemon.name + "!");
-        console.log("Here are the details about your opponent");
-        console.log(opponentPokemon);
-      }
-      if (fourthAnswer.pokemon === "Bulbasaur") {
+      } else if (fourthAnswer.pokemon === "Bulbasaur") {
         opponentPokemon = new Bulbasaur();
-        console.log("you've picked " + opponentPokemon.name + "!");
-        console.log("Here are the details about your opponent");
-      }
-      if (fourthAnswer.pokemon === "Rattata") {
+      } else if (fourthAnswer.pokemon === "Rattata") {
         opponentPokemon = new Rattata();
-        console.log("you've picked " + opponentPokemon.name + "!");
-        console.log("Here are the details about your opponent");
-        console.log(opponentPokemon);
       }
+
+      console.log(`You've picked ${opponentPokemon.name} as your opponent!`);
+      await sleep(2000);
+      console.log("Here are the details about your opponent:");
+      console.log(opponentPokemon);
+      await sleep(2000);
 
       console.log("Time to battle! Who will win?");
-      return inquirer.prompt(fifthQuestion)
+      const fifthAnswer = await inquirer.prompt(fifthQuestion);
 
-    }).then((fifthAnswer) => {
-      battle()
-    })
-    
-    
+      battle();
+    }
+  }
 
+  startGame();
 }
 
 playGame();
