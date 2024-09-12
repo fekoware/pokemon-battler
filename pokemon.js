@@ -206,7 +206,6 @@ export class Trainer {
   }
 }
 
-
 const firstQuestion = [
   {
     type: "input",
@@ -238,12 +237,12 @@ const fourthQuestion = [
     name: "pokemon",
     message: "Choose the pokemon you want to play against",
     choices: ["Rattata", "Squirtle", "Bulbasaur", "Charmander"],
-  }
-]
+  },
+];
 
-const fifthQuestion = [
+const fifthQuestion = [];
 
-]
+
 function playGame() {
   let trainer;
   let pokemon;
@@ -262,6 +261,37 @@ function playGame() {
     });
   }
 
+  function battle() {
+
+    if(pokemon.hasFainted()) {
+      console.log(`Oh no! Your pokemon ${pokemon.name} has fainted, and you have lost!` )
+      console.log('Choose another type of pokemon and try again')
+    }
+    else if (opponentPokemon.hasFainted) {
+      console.log(`Well done! Your pokemon has won the battle! Time for ${pokemon.name} to get some rest`)
+      console.log("Thank you for playing. Goodbye!")
+      return
+    }
+    console.log("inside battle function")
+
+    console.log(trainer.getPokemon(pokemon)
+  )
+    console.log(trainer)
+    console.log(opponentPokemon.hitpoints)
+
+    opponentPokemon.takeDamage(pokemon.useMove())
+
+
+    console.log(opponentPokemon.name + " has " + opponentPokemon.hitpoints +  " hitpoints left")
+    
+
+
+
+    //battle takes in both pokemons
+
+    // enters a promise chain where pokemon go back and forth
+
+  }
 
   namePrompt()
     .then((secondAnswer) => {
@@ -274,7 +304,7 @@ function playGame() {
         );
         console.log("After, you'll take your pokemon into battle!");
         trainer = new Trainer();
-       
+
         return inquirer.prompt(thirdQuestion);
       }
     })
@@ -283,80 +313,90 @@ function playGame() {
         pokemon = new Charmander();
         console.log("you've picked " + pokemon.name + "!");
         console.log("Here are the details about your pokemon");
-        console.log(pokemon)
+        console.log(pokemon);
         trainer.catch(pokemon);
-        console.log("View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!")
-        console.log(trainer)
-        console.log(trainer.belt.forEach((pokeball) => {
-          console.log(pokeball.name)
-        }));
+        console.log(
+          "View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!"
+        );
+        console.log(trainer);
+        console.log(
+          trainer.belt.forEach((pokeball) => {
+            console.log(pokeball.name);
+          })
+        );
       }
       if (thirdAnswer.pokemon === "Squirtle") {
         pokemon = new Squirtle();
         console.log("you've picked " + pokemon.name + "!");
         console.log("Here are the details about your pokemon");
-        console.log(pokemon)
+        console.log(pokemon);
         trainer.catch(pokemon);
-        console.log("View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!")
-        console.log(trainer)
+        console.log(
+          "View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!"
+        );
+        console.log(trainer);
       }
       if (thirdAnswer.pokemon === "Bulbasaur") {
         pokemon = new Bulbasaur();
         console.log("you've picked " + pokemon.name + "!");
         console.log("Here are the details about your pokemon");
-        console.log(pokemon)
+        console.log(pokemon);
         trainer.catch(pokemon);
-        console.log("View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!")
-        console.log(trainer)
+        console.log(
+          "View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!"
+        );
+        console.log(trainer);
       }
       if (thirdAnswer.pokemon === "Rattata") {
         pokemon = new Rattata();
         console.log("you've picked " + pokemon.name + "!");
         console.log("Here are the details about your pokemon");
-        console.log(pokemon)
+        console.log(pokemon);
         trainer.catch(pokemon);
-        console.log("View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!")
-        console.log(trainer)
+        console.log(
+          "View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!"
+        );
+        console.log(trainer);
       }
-      console.log(
-        pokemon.name + " has been added to your your pokebelt"
-      );
+      console.log(pokemon.name + " has been added to your your pokebelt");
       return inquirer.prompt(fourthQuestion);
     })
     .then((fourthAnswer) => {
       if (fourthAnswer.pokemon === "Charmander") {
         opponentPokemon = new Charmander();
-        console.log("you've picked " + opponentPokemon.name + "as your opponent!");
+        console.log(
+          "you've picked " + opponentPokemon.name + "as your opponent!"
+        );
         console.log("Here are the details about your opponent");
-        console.log(opponentPokemon)
+        console.log(opponentPokemon);
       }
       if (fourthAnswer.pokemon === "Squirtle") {
         opponentPokemon = new Squirtle();
         console.log("you've picked " + opponentPokemon.name + "!");
         console.log("Here are the details about your opponent");
-        console.log(opponentPokemon)
+        console.log(opponentPokemon);
       }
       if (fourthAnswer.pokemon === "Bulbasaur") {
         opponentPokemon = new Bulbasaur();
         console.log("you've picked " + opponentPokemon.name + "!");
         console.log("Here are the details about your opponent");
-        
       }
       if (fourthAnswer.pokemon === "Rattata") {
         opponentPokemon = new Rattata();
         console.log("you've picked " + opponentPokemon.name + "!");
         console.log("Here are the details about your opponent");
-        console.log(opponentPokemon)
+        console.log(opponentPokemon);
       }
 
-
-      console.log("Time to battle! Who will win?")
-    return inquirer.prompt(fifthQuestion)
+      console.log("Time to battle! Who will win?");
+      return inquirer.prompt(fifthQuestion)
 
     }).then((fifthAnswer) => {
-      console.log(pokemon.useMove())
-      console.log(opponentPokemon)
-    }) ;
+      battle()
+    })
+    
+    
+
 }
 
 playGame();
