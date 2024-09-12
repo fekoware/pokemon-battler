@@ -1,120 +1,77 @@
 ---
 
-# Pokémon Battler CLI
+# Pokémon-Style Battle CLI Game
 
-Welcome to the **Pokémon Battler CLI** game! This game allows you to become a Pokémon Trainer, catch Pokémon, and battle opponents in a turn-based combat system. The game runs entirely in the terminal using [Inquirer.js](https://www.npmjs.com/package/inquirer) for prompts.
+This project is a Command-Line Interface (CLI) game inspired by Pokémon battles. Players can simulate battles, catch Pokémon, and manage teams using inquirer.js prompts. The game logic supports different Pokémon types (Fire, Water, Grass, Normal) with their respective strengths and weaknesses, along with battle mechanics for trainers.
 
 ## Features
 
-- Play as a Pokémon Trainer and catch a Pokémon.
-- Choose between **Charmander**, **Squirtle**, **Bulbasaur**, or **Rattata** as your starter Pokémon.
-- Battle against an AI opponent with one of the available Pokémon.
-- Pokémon have types (**Fire**, **Water**, **Grass**, **Normal**) with strengths and weaknesses.
-- Use moves, deal damage, and try not to faint!
-
-## Gameplay
-
-The game will ask you to:
-1. Enter your name as a Trainer.
-2. Catch your first Pokémon.
-3. Battle against an opponent's Pokémon.
-4. Attack and defend in turn-based combat.
-5. Win or lose based on hit points and type advantages.
-
-## Classes Overview
-
-### `Pokemon`
-The base class for all Pokémon. Each Pokémon has:
-- `name`: The Pokémon's name.
-- `hitpoints`: Amount of health points.
-- `attackDamage`: The damage dealt by the Pokémon's attack.
-- `move`: The move it uses in battle.
-  
-#### Methods
-- `takeDamage(damage)`: Reduces the Pokémon's hitpoints by a given damage amount.
-- `useMove()`: Logs the move the Pokémon uses and returns the attack damage.
-- `hasFainted()`: Checks if the Pokémon has fainted (i.e., hitpoints <= 0).
-
-### Type-Specific Pokémon Classes
-
-#### `firePokemon`
-- Strong against `grassPokemon`.
-- Weak to `waterPokemon`.
-
-#### `waterPokemon`
-- Strong against `firePokemon`.
-- Weak to `grassPokemon`.
-
-#### `grassPokemon`
-- Strong against `waterPokemon`.
-- Weak to `firePokemon`.
-
-#### `normalPokemon`
-- No strengths or weaknesses.
-
-### `Pokeball`
-Holds one Pokémon. Functions include:
-- `ballThrow(pokemon)`: Catch a Pokémon if the Pokeball is empty.
-- `isEmpty()`: Check if the Pokeball is empty.
-- `contains()`: Return the Pokémon in the Pokeball or indicate if it's empty.
-
-### `Trainer`
-A trainer has a belt with 6 Pokeballs. Methods include:
-- `catch(pokemon)`: Catch a Pokémon in one of the available Pokeballs.
-- `getPokemon(pokemon)`: Retrieve a specific Pokémon from the Trainer's belt.
+- **Pokémon Types**: Supports Fire, Water, Grass, and Normal Pokémon, each with unique attributes.
+- **Battle System**: Includes damage calculation, move effectiveness, and type-based advantages.
+- **Trainer Management**: Trainers can catch Pokémon using Pokéballs, store them in their belt, and access them during battles.
+- **Pokéball Mechanics**: Players can catch and store Pokémon in Pokéballs, check if they're empty, and release Pokémon for battles.
+- **Turn-Based Combat**: Players can engage in battles with turn-based mechanics, selecting moves and strategies.
 
 ## Setup
 
-### Prerequisites
-- Node.js installed on your machine.
-- Install dependencies using npm.
+### Requirements
+
+- Node.js
+- npm
 
 ### Installation
 
-1. Clone this repository.
-2. Navigate to the project directory.
-3. Run `npm install` to install required dependencies.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/pokemon-battler-cli.git
+   ```
+2. Navigate to the project folder:
+   ```bash
+   cd pokemon-battler-cli
+   ```
+3. Install the necessary dependencies:
+   ```bash
+   npm install
+   ```
 
-### Usage
+### Running the Game
 
-Run the following command to start the game:
-
+To start the CLI Pokémon battle game, run:
 ```bash
 node pokemon.js
 ```
 
-Follow the prompts to play.
+You'll be prompted to register trainers, select Pokémon, and engage in battles.
 
-### Example
+### Running the Tests
 
-```
-Hello Trainer! What is your name?
-> Ash
+This project uses Jest for testing. To run the tests, follow these steps:
 
-Hello, Trainer Ash! Ready to play?
-> Yes
+1. Ensure all dependencies are installed (see installation steps above).
+2. Run the following command:
+   ```bash
+   npm test
+   ```
 
-Choose your Pokémon you want to catch
-> Charmander
+This will run all test cases defined in the `tests/pokemon.test.js` file. The tests cover Pokémon instantiation, attack calculations, type advantages, Pokéball functionality, and battle outcomes.
 
-Ash, you've picked Charmander!
-...
+### Test Suite Overview
 
-Time to battle!
-```
+The test suite includes the following checks:
 
-### Notes
-
-- Pokémon types affect the damage dealt during battle.
-- If your Pokémon faints, you lose the battle.
-- The game is turn-based and you take turns attacking the opponent's Pokémon. Each turn is automatic
-
-## Contributing
-
-If you'd like to contribute to the game, feel free to fork the repository and submit a pull request!
+- **Pokemon Creation**: Verifies that Pokémon are instantiated correctly with their properties like `name`, `hitpoints`, `attackDamage`, and `move`.
+- **Type Effectiveness**: Tests for Pokémon's strengths and weaknesses against different types (e.g., Fire vs. Grass).
+- **Hitpoint Reduction**: Ensures that the `takeDamage` method reduces hitpoints as expected.
+- **Pokéball Functionality**: Verifies if Pokémon are caught correctly and can be retrieved from Pokéballs.
+- **Trainer Management**: Tests for the ability to catch Pokémon, store them in the Trainer's belt, and retrieve them for battles.
+- **Battle System**: Ensures that battles are set up correctly with two trainers and six Pokémon on each side. (did not complete)
 
 ## License
 
 This project is licensed under the MIT License.
 
----
+## Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+--- 
