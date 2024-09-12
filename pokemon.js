@@ -280,42 +280,45 @@ function playGame() {
       opponentPokemon.attackDamage = opponentPokemon.attackDamage * 0.75;
     }
 
-    while (pokemon.hitpoints > 0 || opponentPokemon.hitpoints > 0) {
-      await sleep(1000);
+    while (pokemon.hitpoints > 0 && opponentPokemon.hitpoints > 0) {
+      await sleep(3000);
       pokemon.takeDamage(opponentPokemon.useMove());
       console.log(
-        `Your Pokemon ${pokemon.name} has ${pokemon.hitpoints} left before they faint `
+        `Your Pokemon ${pokemon.name} has ${pokemon.hitpoints} hitpoints left before they faint `
       );
+      console.log("-------------------------------")
 
-      await sleep(1000);
+      await sleep(3000);
       opponentPokemon.takeDamage(pokemon.useMove());
       console.log(
-        `Your Opponent ${opponentPokemon.name} has ${opponentPokemon.hitpoints} left before they faint `
+        `Your Opponent ${opponentPokemon.name} has ${opponentPokemon.hitpoints} hitpoints left before they faint `
       );
+      console.log("-------------------------------")
     }
 
-    await sleep(1000);
+    await sleep(3000);
     if (pokemon.hasFainted()) {
-      await sleep(1000);
+      await sleep(2000);
       console.log(
         `Oh no! Your pokemon ${pokemon.name} has fainted, and you have lost!`
       );
 
-      await sleep(1000);
+      await sleep(2000);
       console.log(
         "Restart the game. choose another type of pokemon and try again. Goodbye."
       );
     }
 
-    await sleep(1000);
+    await sleep(2000);
     if (opponentPokemon.hasFainted()) {
-      await sleep(1000);
+      await sleep(2000);
       console.log(
         `Well done! Your pokemon has won the battle! Time for ${pokemon.name} to get some rest`
       );
 
-      await sleep(1000);
-      console.log("Thank you for playing. Goodbye, winner!");
+      await sleep(2000);
+      console.log(`Thank you for playing. Goodbye, ${trainerName}!`);
+      await sleep(2000);
       return;
     }
   }
@@ -325,12 +328,14 @@ function playGame() {
   }
 
   async function startGame() {
+    await sleep(2000);
     const secondAnswer = await namePrompt();
-
+    await sleep(2000);
     if (!secondAnswer.confirm) {
-      return "Okay, come back next time when you're ready to catch 'em all. Goodbye!";
+      console.log( `Okay ${trainerName}, come back next time when you're ready to catch 'em all. Goodbye!`);
+      return
     } else {
-      console.log("Okay! We're setting up your pokeballs");
+      console.log(`Okay ${trainerName}! We're setting up your pokeballs`);
       await sleep(2000);
       console.log(
         "You'll have 5 pokeballs, but there will only be one pokemon to catch!"
@@ -338,9 +343,9 @@ function playGame() {
       await sleep(2000);
       console.log("After, you'll take your pokemon into battle!");
       trainer = new Trainer();
-
+      await sleep(2000);
       const thirdAnswer = await inquirer.prompt(thirdQuestion);
-
+      await sleep(2000);
       if (thirdAnswer.pokemon === "Charmander") {
         pokemon = new Charmander();
       } else if (thirdAnswer.pokemon === "Squirtle") {
@@ -351,7 +356,7 @@ function playGame() {
         pokemon = new Rattata();
       }
       await sleep(2000);
-      console.log(`You've picked ${pokemon.name}!`);
+      console.log(`${trainerName}, you've picked ${pokemon.name}!`);
       await sleep(2000);
       console.log("Here are the details about your pokemon:");
       await sleep(2000);
@@ -362,9 +367,9 @@ function playGame() {
       console.log("View how your belt looks:");
       await sleep(2000);
       console.log(trainer);
-
+      await sleep(2000);
       const fourthAnswer = await inquirer.prompt(fourthQuestion);
-
+      await sleep(2000);
       if (fourthAnswer.pokemon === "Charmander") {
         opponentPokemon = new Charmander();
       } else if (fourthAnswer.pokemon === "Squirtle") {
@@ -374,16 +379,17 @@ function playGame() {
       } else if (fourthAnswer.pokemon === "Rattata") {
         opponentPokemon = new Rattata();
       }
-
+      await sleep(2000);
       console.log(`You've picked ${opponentPokemon.name} as your opponent!`);
       await sleep(2000);
       console.log("Here are the details about your opponent:");
       console.log(opponentPokemon);
       await sleep(2000);
 
-      console.log("Time to battle! Who will win?");
+      console.log(`${trainerName}, it is time to battle! You go first!`);
+      console.log("-------------------------------")
       const fifthAnswer = await inquirer.prompt(fifthQuestion);
-
+      await sleep(2000);
       battle();
     }
   }
