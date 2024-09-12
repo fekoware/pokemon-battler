@@ -4,7 +4,7 @@ export class Pokemon {
     this.name = name;
     this.hitpoints = hitpoints;
     this.attackDamage = attackDamage;
-    if (move != "") {
+    if (move === "") {
       this.move = move;
     } else this.move = "tackle";
   }
@@ -206,9 +206,6 @@ export class Trainer {
   }
 }
 
-export class Battle {
-  
-}
 
 const firstQuestion = [
   {
@@ -220,30 +217,146 @@ const firstQuestion = [
 
 const secondQuestion = [
   {
-    type: 'confirm',
-    name: 'confirm',
-    message: 'Do you want to continue?',
+    type: "confirm",
+    name: "confirm",
+    message: "Do you want to continue?",
+  },
+];
+
+const thirdQuestion = [
+  {
+    type: "list",
+    name: "pokemon",
+    message: "Choose your pokemon you want to catch",
+    choices: ["Rattata", "Squirtle", "Bulbasaur", "Charmander"],
+  },
+];
+
+const fourthQuestion = [
+  {
+    type: "list",
+    name: "pokemon",
+    message: "Choose the pokemon you want to play against",
+    choices: ["Rattata", "Squirtle", "Bulbasaur", "Charmander"],
   }
 ]
 
-function playGame() {
-  inquirer.
-  prompt(firstQuestion).then((firstAnswer) => {
-    console.log("Hello, Trainer " + firstAnswer.name + "! Ready to play?")
-    return inquirer.prompt(secondQuestion)
+const fifthQuestion = [
 
-  }).then((secondAnswer) => {
-    if (!secondAnswer.name) {
-      console.log("Okay, come back next time when you're ready to catch em' all!")
-      return 
-    }
-    else {
-      console.log("Okay! We're setting up your pokeballs");
-      console.log("You'll have 5 pokeballs, but there will only be one pokemon to catch!")
-      console.log("After, you'll take your pokemon into battle!")
-    }
-  });
+]
+function playGame() {
+  let trainer;
+  let pokemon;
+  let opponentPokemon;
+
+  function namePrompt() {
+    return inquirer.prompt(firstQuestion).then((firstAnswer) => {
+      if (firstAnswer.name.length === 0) {
+        console.log("empty name not allowed, please insert any name");
+        return namePrompt();
+      } else {
+        trainer = firstAnswer.name;
+        console.log("Hello, Trainer " + firstAnswer.name + "! Ready to play?");
+        return inquirer.prompt(secondQuestion);
+      }
+    });
+  }
+
+
+  namePrompt()
+    .then((secondAnswer) => {
+      if (!secondAnswer.confirm) {
+        return "Okay, come back next time when you're ready to catch em' all. Goodbye!";
+      } else {
+        console.log("Okay! We're setting up your pokeballs");
+        console.log(
+          "You'll have 5 pokeballs, but there will only be one pokemon to catch!"
+        );
+        console.log("After, you'll take your pokemon into battle!");
+        trainer = new Trainer();
+       
+        return inquirer.prompt(thirdQuestion);
+      }
+    })
+    .then((thirdAnswer) => {
+      if (thirdAnswer.pokemon === "Charmander") {
+        pokemon = new Charmander();
+        console.log("you've picked " + pokemon.name + "!");
+        console.log("Here are the details about your pokemon");
+        console.log(pokemon)
+        trainer.catch(pokemon);
+        console.log("View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!")
+        console.log(trainer)
+        console.log(trainer.belt.forEach((pokeball) => {
+          console.log(pokeball.name)
+        }));
+      }
+      if (thirdAnswer.pokemon === "Squirtle") {
+        pokemon = new Squirtle();
+        console.log("you've picked " + pokemon.name + "!");
+        console.log("Here are the details about your pokemon");
+        console.log(pokemon)
+        trainer.catch(pokemon);
+        console.log("View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!")
+        console.log(trainer)
+      }
+      if (thirdAnswer.pokemon === "Bulbasaur") {
+        pokemon = new Bulbasaur();
+        console.log("you've picked " + pokemon.name + "!");
+        console.log("Here are the details about your pokemon");
+        console.log(pokemon)
+        trainer.catch(pokemon);
+        console.log("View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!")
+        console.log(trainer)
+      }
+      if (thirdAnswer.pokemon === "Rattata") {
+        pokemon = new Rattata();
+        console.log("you've picked " + pokemon.name + "!");
+        console.log("Here are the details about your pokemon");
+        console.log(pokemon)
+        trainer.catch(pokemon);
+        console.log("View how your belt looks. You can see you will have 5 empty spaces, and one space occupied by your caught pokemon!")
+        console.log(trainer)
+      }
+      console.log(
+        pokemon.name + " has been added to your your pokebelt"
+      );
+      return inquirer.prompt(fourthQuestion);
+    })
+    .then((fourthAnswer) => {
+      if (fourthAnswer.pokemon === "Charmander") {
+        opponentPokemon = new Charmander();
+        console.log("you've picked " + opponentPokemon.name + "as your opponent!");
+        console.log("Here are the details about your opponent");
+        console.log(opponentPokemon)
+      }
+      if (fourthAnswer.pokemon === "Squirtle") {
+        opponentPokemon = new Squirtle();
+        console.log("you've picked " + opponentPokemon.name + "!");
+        console.log("Here are the details about your opponent");
+        console.log(opponentPokemon)
+      }
+      if (fourthAnswer.pokemon === "Bulbasaur") {
+        opponentPokemon = new Bulbasaur();
+        console.log("you've picked " + opponentPokemon.name + "!");
+        console.log("Here are the details about your opponent");
+        
+      }
+      if (fourthAnswer.pokemon === "Rattata") {
+        opponentPokemon = new Rattata();
+        console.log("you've picked " + opponentPokemon.name + "!");
+        console.log("Here are the details about your opponent");
+        console.log(opponentPokemon)
+      }
+
+
+      console.log("Time to battle! Who will win?")
+    return inquirer.prompt(fifthQuestion)
+
+    }).then((fifthAnswer) => {
+      console.log(pokemon.useMove())
+      console.log(opponentPokemon)
+    }) ;
 }
 
 playGame();
-
