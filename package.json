@@ -2,7 +2,7 @@
   "name": "pokemon-battler",
   "version": "1.0.0",
   "description": "For this sprint, head to Northcoder's L2C app:",
-  "main": "index.js",
+  "main": "pokemon.js",
   "type": "module",
   "scripts": {
     "test": "jest --watch"
